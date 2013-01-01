@@ -69,7 +69,7 @@ spooler_close(void)
   }
 }
 
-static void
+int
 spooler_read_char(void)
 {
   KeySym ks;
@@ -77,23 +77,9 @@ spooler_read_char(void)
   ks = fgetc(spooler_file);
   if (ks == EOF) {
     spooler_close();
+		return 0;
   } else {
-    keypress(ks, 0);
-  }
-}
-
-void
-spooler_read(void)
-{
-  switch (spooler_state) {
-    case SPOOLER_READ_CHAR:
-      spooler_state = SPOOLER_CLEAR_CHAR;
-      spooler_read_char();
-      break;
-    case SPOOLER_CLEAR_CHAR:
-      spooler_state = SPOOLER_READ_CHAR;
-      clear_keyboard();
-      break;
+		return ks;
   }
 }
 

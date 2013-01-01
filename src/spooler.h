@@ -37,7 +37,7 @@ extern void spooler_init(SpoolerObserver spooler_observer_func,
                          KeypressFunc keypress_func);
 extern void spooler_open(char *filename);
 extern void spooler_close(void);
-extern void spooler_read(void);
+extern int spooler_read_char(void);
 extern int spooler_active(void);
 
 #endif

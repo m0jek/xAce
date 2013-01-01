@@ -321,6 +321,27 @@ loadrom(unsigned char *x)
 unsigned int
 in(int h, int l)
 {
+  // New part for spooling keys
+  if (spooler_active() && l==0xfe && h==0xfe) {
+    static int d=0;
+    static int x;
+
+    if (!d) {
+      if (x) {
+        keyboard_keyrelease(x, 0);
+        x = 0;
+      } else {
+        x = spooler_read_char(); // Some function that returns next key pressed
+        if (x) {
+          keyboard_keypress(x, 0);
+          d = 2; // This decides how long the key is pressed, less than 2 does not seem to work
+        }
+      }
+    } else {
+      d--;
+    }
+  }
+
   if(l==0xfe) /* keyboard */
     switch(h) {
       case 0xfe: return(keyboard_get_keyport(0));
@@ -363,7 +384,6 @@ do_interrupt(void)
     count++;
     if (count >= scrn_freq) {
       count=0;
-      spooler_read();
       refresh();
     }
 
