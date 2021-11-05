@@ -23,6 +23,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef __APPLE__ && __MACH__
+#include <unistd.h> 
+#include <ctype.h>
+#endif
 
 #include "z80.h"
 #include "tape.h"
