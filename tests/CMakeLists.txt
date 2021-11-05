@@ -1,3 +1,6 @@
+if(APPLE)
+add_definitions(-I/usr/local/include)
+endif()
 include_directories(${xAce_SOURCE_DIR}/src)
 add_executable(tape_test tape_test.c ${xAce_SOURCE_DIR}/src/tape.c)
 add_executable(keyboard_test keyboard_test.c ${xAce_SOURCE_DIR}/src/keyboard.c)
